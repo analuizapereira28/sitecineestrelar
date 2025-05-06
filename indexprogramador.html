@@ -27,8 +27,8 @@
     <header class="cabecalho " >
         <div class="divcbc d-flex">
         <img class="logo cabecalho1" src="assets/img/cinestrelar.png">
-        <a class="btn-cbc">PROGRAMAÇÃO</a>
-        <a class="btn-cbc">SNACKBAR</a>
+        <a href="#programacao" class="btn-cbc">PROGRAMAÇÃO</a>
+        <a class="btn-cbc" href="snackbar.html">SNACKBAR</a>
         <a class="btn-cbc">CLUB CINESTELAR</a>
 
         
@@ -82,6 +82,21 @@
             </div>
            
         </div>
+
+        <div class="container">
+            <div class="row">
+               
+                    <a href="criarsala.html" style=" display: block; width: 250px; height: 65px; margin-bottom: 60px;" class="btnrodape text-center">CRIAR SALA</a>
+                </div>
+               
+            </div>
+
+        <!-- Botão CRIAR SESSÃO -->
+        <a href="addsessao.html?idfilme=${filme.id_cadastrof}" 
+           style="display: block; width: 250px; height: 69px; margin-bottom: 57px; background-color: #ffffff;" 
+           class="btnrodape text-center">
+           CRIAR SESSÃO
+        </a>
         
         <h3 class="subtit-white22">
             EDITAR FILMES
@@ -99,7 +114,7 @@
 async function carregarFilmes() {
     try {
         // Faz uma requisição para a API que retorna a lista de filmes
-        const resposta = await fetch("http://192.168.1.120:5000/filme");
+        const resposta = await fetch("http://192.168.1.128:5000/filme");
         
         // Converte a resposta para JSON
         const dados = await resposta.json();
@@ -130,7 +145,7 @@ async function carregarFilmes() {
 
         <!-- Imagem do filme -->
         <a href="pagefilme.html?id=${filme.id_cadastrof}">
-            <img src="http://192.168.1.120:5000/${filme.imagem}" 
+            <img src="http://192.168.1.128:5000/${filme.imagem}" 
                  alt="${filme.titulo}" 
                  style="width: 192px; height: 282px; border-radius: 8px;">
         </a>
@@ -142,12 +157,7 @@ async function carregarFilmes() {
            EDITAR FILME
         </a>
 
-        <!-- Botão CRIAR SESSÃO -->
-        <a href="addsessao.html?idfilme=${filme.id_cadastrof}" 
-           style="display: block; width: 85%; height: 50px; margin: 0 auto 10px; background-color: #ffc107;" 
-           class="btnrodape text-center">
-           CRIAR SESSÃO
-        </a>
+        
 
         <!-- Botão EXCLUIR -->
         <button class="btn-danger btnexcluir" id="btnexcluir"
@@ -268,78 +278,69 @@ $(document).ready(function () {
             </div>
         </div>
 
-
-
-
         <h3 class="subtit-white22" style="margin-top: 100px;">
             CADASTRAR PROMOÇÕES
         </h3>
         <div class="container">
             <div class="row">
                 <div class="col-md-4"></div>
-                <div class="col-md-4" >
-                    <a href="addpromo.html" style=" display: block; width: 100%; height: 65px; margin-bottom: 60px;" class="btnrodape text-center">CADASTRAR PROMOÇÃO</a>
+                <div class="col-md-4">
+                    <a href="addpromo.html" style="display: block; width: 100%; height: 65px; margin-bottom: 60px;" class="btnrodape text-center">CADASTRAR PROMOÇÃO</a>
                 </div>
                 <div class="col-md-4"></div>
             </div>
-           
         </div>
-
-
-
-
-        <h3 class="subtit-white22" style="margin-top: 18px; margin-bottom: 30px" >
+        
+        <h3 class="subtit-white22" style="margin-top: 18px; margin-bottom: 30px">
             EDITAR PROMOÇÕES
         </h3>
-
+        
         <div class="container">
-            <div class="row" id="promoexibe" style="margin-bottom: 116px;" >
-               
+            <div class="row" id="promoexibe" style="margin-bottom: 116px;">
+                <!-- Promoções serão carregadas aqui -->
             </div>
         </div>
+        
         <div class="promo-container" id="promoDiv"></div>
-
-
-<script>
-async function carregarPromocoes() {
-    try {
-        const resposta = await fetch("http://192.168.1.120:5000/promocao");
-        const dados = await resposta.json();
-
-        const promocoesContainer = document.getElementById("promoexibe");
-
-        dados.promocao.forEach(promo => {
-            if (!document.getElementById(`promo-${promo.id_promo}`)) {
-                const promoDiv = document.createElement("div");
-
-                promoDiv.classList.add("col-10", "col-md-8", "mb-4", "text-center");
-
-                promoDiv.id = `promo-${promo.id_promo}`;
-
-                promoDiv.innerHTML += `<div class="promo-card">
-    <div class="promo-content">
-      <img class="promo-img" src="http://192.168.1.120:5000/${promo.capapromo}" alt="Promoção">
-      <h5 class="promo-title">${promo.titulo}</h5>
-      <p class="promo-text">${promo.descricaopromo}</p>
-    </div>
-  </div>
-`;
-
-
-                promocoesContainer.appendChild(promoDiv);
+        
+        <script>
+        async function carregarPromocoes() {
+            try {
+                const resposta = await fetch("http://192.168.1.128:5000/promocao");
+                const dados = await resposta.json();
+        
+                const promocoesContainer = document.getElementById("promoexibe");
+        
+                dados.promocao.forEach(promo => {
+                    if (!document.getElementById(`promo-${promo.id_promo}`)) {
+                        const promoDiv = document.createElement("div");
+        
+                        promoDiv.classList.add("col-12", "col-md-4", "mb-4", "promo-item");
+                        promoDiv.id = `promo-${promo.id_promo}`;
+        
+                        promoDiv.innerHTML = `
+                            <div class="promo-card">
+                                <div class="promo-content">
+                                    <img class="promo-img" src="http://192.168.1.128:5000/${promo.capapromo}" alt="Promoção">
+                                    <h5 class="promo-title">${promo.titulo}</h5>
+                                    <p class="promo-text">${promo.descricaopromo}</p>
+                                    <a href="editpromo.html?id=${promo.id_promo}" class="btn btn-warning edit-btn">Editar</a>
+                                </div>
+                            </div>
+                        `;
+        
+                        promocoesContainer.appendChild(promoDiv);
+                    }
+                });
+            } catch (error) {
+                console.error("Erro ao carregar promoções:", error);
             }
-        });
-
-    } catch (error) {
-        console.error("Erro ao carregar promoções:", error);
-    }
-}
-
-carregarPromocoes();
-</script>
-
-
-    
+        }
+        
+        carregarPromocoes();
+        </script>
+        
+        
 
         <h3 class="subtit-white22">
             RELATÓRIO
@@ -348,7 +349,7 @@ carregarPromocoes();
         <div class="row">
             <div class="col-md-4"></div>
             <div class="col-md-4" >
-                <a href="http://192.168.1.120:5000/usuario/relatorio" style=" display: block; width: 100%; height: 65px; margin-bottom: 60px;" class="btnrodape text-center">RELATÓRIO</a>
+                <a href="http://192.168.1.128:5000/usuario/relatorio" style=" display: block; width: 100%; height: 65px; margin-bottom: 60px;" class="btnrodape text-center">RELATÓRIO</a>
             </div>
             <div class="col-md-4"></div>
         </div>
