@@ -20,7 +20,9 @@
 
     <header class="cabecalho">
         <div class="divcbc d-flex">
-            <img class="logo cabecalho1" src="assets/img/cinestrelar.png">
+            <a href="indexprogramador.html">
+    <img class="logo cabecalho1" src="assets/img/cinestrelar.png">
+</a>
             <a class="btn-cbc" href="index.html">PROGRAMAÇÃO</a>
             <a class="btn-cbc">SNACKBAR</a>
             <a class="btn-cbc">CLUB CINESTELAR</a>
@@ -43,7 +45,7 @@
                             const urlParams = new URLSearchParams(window.location.search);
                             const idFilme = urlParams.get('id');
 
-                            const resposta = await fetch(`http://192.168.1.128:5000/filme/${idFilme}`);
+                            const resposta = await fetch(`http://192.168.1.130:5000/filme/${idFilme}`);
 
                             if (!resposta.ok) {
                                 throw new Error('Filme não encontrado');
@@ -52,7 +54,7 @@
                             const filme = await resposta.json();
 
                             // Atualizando a imagem do filme
-                            document.getElementById('capafilmee').src = `http://192.168.1.128:5000/${filme.imagem}`;
+                            document.getElementById('capafilmee').src = `http://192.168.1.130:5000/${filme.imagem}`;
 
                             // Atualizando o título do filme
                             document.getElementById('titulo').innerText = filme.nome;
@@ -119,7 +121,7 @@
                 const urlParams = new URLSearchParams(window.location.search);
                 const idFilme = urlParams.get('id');
     
-                const resposta = await fetch("http://192.168.1.128:5000/filme");
+                const resposta = await fetch("http://192.168.1.130:5000/filme");
     
                 if (!resposta.ok) {
                     throw new Error('Erro ao buscar filmes');
@@ -135,8 +137,8 @@
                 }
     
                 // Atualiza imagem, título e sinopse
-                document.getElementById('capafilmee').src = `http://192.168.1.128:5000/${filme.imagem}`;
-                document.getElementById('capa').src = `http://192.168.1.128:5000/${filme.imagem}`;
+                document.getElementById('capafilmee').src = `http://192.168.1.130:5000/${filme.imagem}`;
+                document.getElementById('capa').src = `http://192.168.1.130:5000/${filme.imagem}`;
                 document.getElementById('titulo').innerText = filme.titulo;
                 document.getElementById('sinopse').innerText = filme.sinopse;
                 document.getElementById('autor').innerText = filme.diretor;
@@ -165,7 +167,7 @@
                     throw new Error('ID do filme não encontrado na URL');
                 }
     
-                const resposta = await fetch(`http://192.168.1.128:5000/filme/${idFilme}`);
+                const resposta = await fetch(`http://192.168.1.130:5000/filme/${idFilme}`);
     
                 if (!resposta.ok) {
                     throw new Error('Erro ao buscar dados do filme');
@@ -177,7 +179,7 @@
                 const capa = document.getElementById('capafilmee');
                 const titulo = document.getElementById('titulo');
     
-                capa.src = `http://192.168.1.128:5000/${filme.imagem}`;
+                capa.src = `http://192.168.1.130:5000/${filme.imagem}`;
                 titulo.innerText = filme.nome;
             } catch (erro) {
                 console.error("Erro ao carregar título:", erro);
@@ -193,7 +195,7 @@
                 const urlParams = new URLSearchParams(window.location.search);
                 const idFilme = urlParams.get('id');
     
-                const resposta = await fetch("http://192.168.1.128:5000/filme");
+                const resposta = await fetch("http://192.168.1.130:5000/filme");
     
                 if (!resposta.ok) {
                     throw new Error('Erro ao buscar filmes');
@@ -209,7 +211,7 @@
                 }
     
                 // Atualiza a imagem e o título
-                document.getElementById('capafilmee').src = `http://192.168.1.128:5000/${filme.imagem}`;
+                document.getElementById('capafilmee').src = `http://192.168.1.130:5000/${filme.imagem}`;
                 document.getElementById('titulo').innerText = filme.titulo;
     
             } catch (erro) {
@@ -227,15 +229,15 @@
           var id = urlParams.get('id');
       
           // Imagens do filme
-          document.getElementById("capafilmee").src = "http://192.168.1.128:5000/static/uploads/cadastro_filme/" + id + ".jpeg";
-          document.getElementById("capa").src = "http://192.168.1.128:5000/static/uploads/cadastro_filme/" + id + ".jpeg";
+          document.getElementById("capafilmee").src = "http://192.168.1.130:5000/static/uploads/cadastro_filme/" + id + ".jpeg";
+          document.getElementById("capa").src = "http://192.168.1.130:5000/static/uploads/cadastro_filme/" + id + ".jpeg";
       
           // Token
           var token = localStorage.getItem('token');
       
           // Requisição para carregar as sessões
           $.ajax({
-            url: "http://192.168.1.128:5000/sessao/" + id,
+            url: "http://192.168.1.130:5000/sessao/" + id,
             method: "GET",
             headers: {
               "Authorization": "Bearer " + token,
@@ -266,6 +268,51 @@
         });
     </script>
     
+    <script>
+  $(document).ready(function () {
+    // Pega o ID do filme pela URL
+    var urlParams = new URLSearchParams(window.location.search);
+    var id = urlParams.get('id');
+
+    // Imagens do filme (com extensão .jpeg e IP atualizado)
+    document.getElementById("capafilmee").src = "http://192.168.1.130:5000/static/uploads/cadastro_filme/" + id + ".jpeg";
+    document.getElementById("capa").src = "http://192.168.1.130:5000/static/uploads/cadastro_filme/" + id + ".jpeg";
+
+    // Recupera token salvo no navegador
+    var token = localStorage.getItem('token');
+
+    // Requisição AJAX para buscar sessões do filme
+    $.ajax({
+      url: "http://192.168.1.130:5000/sessao/" + id,
+      method: "GET",
+      headers: {
+        "Authorization": "Bearer " + token,
+        "Content-Type": "application/json"
+      },
+      success: function (response) {
+        const sessoesA = document.getElementById("sessoes");
+
+        if (response.sessoes && response.sessoes.length > 0) {
+          response.sessoes.forEach(sessao => {
+            const sala = sessao.sala ? sessao.sala : "Não especificada";
+            sessoesA.innerHTML += `
+              <a href="reserva.html?id=${sessao.id_sessao}" style=" background-color: rgb(70, 70, 70)   ; color: white ;display: block; width: 70%; height: 95px; margin-bottom: 60px;" class="btnrodape text-center">
+                ${sessao.datasessao} <br>
+                <button style="width: 50%; height: 35px; background-color: red; color: rgb(255, 255, 255); font-family: Poppins; font-weight: 600; border-radius: 5px; margin-top: 5px; box-shadow: none; border: none" >RESERVAR</button>
+
+              </a>`;
+          });
+        } else {
+          sessoesA.innerHTML = "<p style='color: white;'>Nenhuma sessão disponível.</p>";
+        }
+      },
+      error: function (xhr, status, error) {
+        console.error("Erro ao carregar sessões:", error);
+        document.getElementById("sessoes").innerHTML = "<p style='color: red;'>Erro ao carregar sessões.</p>";
+      }
+    });
+  });
+</script>
       
 </body>
 </html>

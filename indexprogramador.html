@@ -19,6 +19,8 @@
     <script src="assets/js/excluir.js"></script>
     <script src="assets/js/jdfbdh.js" defer></script>
     <script src="assets/js/segurancaadm.js"></script>
+      <script src="assets/js/seguranca.js"></script>
+
 
 
 </head>
@@ -26,15 +28,18 @@
 
     <header class="cabecalho " >
         <div class="divcbc d-flex">
-        <img class="logo cabecalho1" src="assets/img/cinestrelar.png">
+       <a href="indexprogramador.html">
+      <img class="logo cabecalho1" src="assets/img/cinestrelar.png" alt="Logo Cinestrelar">
+       </a>
         <a href="#programacao" class="btn-cbc">PROGRAMAÇÃO</a>
         <a class="btn-cbc" href="snackbar.html">SNACKBAR</a>
         <a class="btn-cbc">CLUB CINESTELAR</a>
-
+        <img src="assets/img/pino-de-localizacao.png" class="pinocbc">
+         <a href="https://www.google.com/maps?q=birigui" target="_blank" class="btn-cbc2">BIRIGUI</a>
         
           
 
-                 <img id="avatar" src="assets/img/Avatar.png" class="avatarcbc">
+       <img id="avatar" src="assets/img/Avatar.png" class="avatarcbc">
        
         
        
@@ -48,6 +53,12 @@
             <a id="btnlateral" href="editarcontaadm.html" style=" display: block; width: 300px; height: 65px;" class="btnlateral btnrodape text-center">MINHA CONTA</a>
             <a id="btnlateral2" href="cadastro.html" style=" display: block; width: 300px; height: 65px; margin-top: 15px;" class="btnlateral btnrodape text-center">SAIBA MAIS SOBRE O<br>CLUB CINESTELAR</a>
 
+         <a href="index.html" class="btnrodape text-center" 
+         style="padding: 10px; background-color: red; color: white; margin-top: 55px; display: block; width: 70%; margin-left: auto; margin-right: auto;">
+        VOLTAR PARA HOME
+        </a>
+        
+        
             <button id="btnlogout" class="Btn">
                 <div class="sign">
                     <svg viewBox="0 0 512 512">
@@ -67,55 +78,212 @@
     </div>
 
     <section>
-
-
-        <h3 class="subtit-white22">
-            CADASTRAR FILMES
-        </h3>
-        <div class="container">
-            <div class="row">
-                <div class="col-md-4"></div>
-                <div class="col-md-4" >
-                    <a href="cadastroFilme.html" style=" display: block; width: 100%; height: 65px; margin-bottom: 60px;" class="btnrodape text-center">CADASTRAR FILME</a>
-                </div>
-                <div class="col-md-4"></div>
-            </div>
-           
-        </div>
-
-        <div class="container">
-            <div class="row">
-               
-                    <a href="criarsala.html" style=" display: block; width: 250px; height: 65px; margin-bottom: 60px;" class="btnrodape text-center">CRIAR SALA</a>
-                </div>
-               
-            </div>
-
-        <!-- Botão CRIAR SESSÃO -->
-        <a href="addsessao.html?idfilme=${filme.id_cadastrof}" 
-           style="display: block; width: 250px; height: 69px; margin-bottom: 57px; background-color: #ffffff;" 
-           class="btnrodape text-center">
-           CRIAR SESSÃO
-        </a>
         
-        <h3 class="subtit-white22">
-            EDITAR FILMES
-        </h3>
+           <!-- Container que alinha os botões lado a lado -->
+<div style="display: flex; justify-content: center; gap: 20px; flex-wrap: wrap; margin-bottom: 60px;">
 
+  <!-- Botão Cadastrar Filme -->
+  <a href="cadastroFilme.html" 
+     style="display: flex; justify-content: center; align-items: center; width: 250px; height: 65px; background-color: white; color: black; text-decoration: none; font-weight: bold; border-radius: 8px; margin-top: 154px;" 
+     class="btnrodape text-center">
+     CADASTRAR FILME
+  </a>
+
+  <!-- Botão Criar Sala -->
+  <a href="criarsala.html" 
+     style="display: flex; justify-content: center; align-items: center; width: 250px; height: 65px; background-color: white; color: black; text-decoration: none; font-weight: bold; border-radius: 8px; margin-top: 154px;" 
+     class="btnrodape text-center">
+     CRIAR SALA
+  </a>
+
+  <!-- Botão Criar Sessão -->
+  <a href="addsessao.html?idfilme=${filme.id_cadastrof}" 
+     style="display: flex; justify-content: center; align-items: center; width: 250px; height: 65px; background-color: white; color: black; text-decoration: none; font-weight: bold; border-radius: 8px; margin-top: 154px;" 
+     class="btnrodape text-center">
+     CRIAR SESSÃO
+  </a>
+
+</div>
+ <h3 id="programacao" class="subtit-white22">PROGRAMAÇÃO</h3>
         <div class="container">
-            <div class="row" id="filmesexibe" >
+            <div class="row" id="filmesexibe" ></div>
                     
 
             </div>
         </div>
+
+<!-- IMPORTA SWEETALERT2 -->
+<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+
+<h3 class="subtit-white22" style="margin-top: 100px;">
+    CADASTRAR PROMOÇÕES
+</h3>
+<div class="container">
+    <div class="row">
+        <div class="col-md-4"></div>
+        <div class="col-md-4">
+            <a href="addpromo.html" style="display: block; width: 100%; height: 65px; margin-bottom: 60px;" class="btnrodape text-center">CADASTRAR PROMOÇÃO</a>
+        </div>
+        <div class="col-md-4"></div>
+    </div>
+</div>
+
+<h3 class="subtit-white22" style="margin-top: 18px; margin-bottom: 30px">
+    EDITAR PROMOÇÕES
+</h3>
+
+<div class="container">
+    <div class="row" id="promoexibe" style="margin-bottom: 116px;">
+        <!-- Promoções serão carregadas aqui -->
+    </div>
+</div>
+
+
+<script>
+// Pegando o token do localStorage
+const TOKEN = localStorage.getItem("token");
+
+async function carregarPromocoes() {
+    try {
+        const resposta = await fetch("http://192.168.1.130:5000/promocao");
+        const dados = await resposta.json();
+
+        const promocoesContainer = document.getElementById("promoexibe");
+        promocoesContainer.innerHTML = "";
+
+        dados.promocao.forEach(promo => {
+            const promoDiv = document.createElement("div");
+
+            promoDiv.classList.add("col-12", "col-md-4", "mb-4", "promo-item");
+            promoDiv.id = `promo-${promo.id_promo}`;
+
+        promoDiv.innerHTML = `
+<div class="promo-card border p-3 rounded bg-light shadow-sm">
+    <div class="promo-content text-center">
+        <img class="promo-img img-fluid mb-3" src="http://192.168.1.130:5000/${promo.capapromo}" alt="Promoção">
+        <h5 class="promo-title">${promo.titulo}</h5>
+        <p class="promo-text">${promo.descricaopromo}</p>
+        <div class="d-flex justify-content-center gap-2 mt-3">
+            <a href="editpromo.html?id=${promo.id_promo}" 
+               class="btn text-white" 
+               style="background-color: red; font-size: 14px; padding: 6px 12px; border-radius: 6px;">
+               Editar
+            </a>
+            <button class="btn text-white delete-btn" 
+                    data-id="${promo.id_promo}" 
+                    style="background-color: red; font-size: 14px; padding: 6px 12px; border-radius: 6px;">
+                Excluir
+            </button>
+        </div>
+    </div>
+
+    
+
+
+
+                    </div>
+                </div>
+            `;
+
+
+            
+
+            promocoesContainer.appendChild(promoDiv);
+        });
+
+        // Adiciona evento para cada botão de excluir
+        document.querySelectorAll('.delete-btn').forEach(button => {
+            button.addEventListener('click', async function () {
+                const id = this.getAttribute('data-id');
+
+                const confirmar = await Swal.fire({
+                    title: 'Tem certeza?',
+                    text: "Você deseja excluir esta promoção?",
+                    icon: 'warning',
+                    showCancelButton: true,
+                    confirmButtonColor: '#d33',
+                    cancelButtonColor: '#3085d6',
+                    confirmButtonText: 'Sim, excluir!',
+                    cancelButtonText: 'Cancelar'
+                });
+
+                if (confirmar.isConfirmed) {
+                    try {
+                        const resposta = await fetch(`http://192.168.1.130:5000/promocao/delete/${id}`, {
+                            method: 'DELETE',
+                            headers: {
+                                'Authorization': `Bearer ${TOKEN}`
+                            }
+                        });
+
+                        const json = await resposta.json();
+
+                        if (resposta.status === 401) {
+                            Swal.fire({
+                                title: 'Sessão expirada',
+                                text: json.mensagem || 'Seu token é inválido ou expirou. Faça login novamente.',
+                                icon: 'warning',
+                                confirmButtonText: 'OK'
+                            }).then(() => {
+                                window.location.href = 'login.html';
+                            });
+                            return;
+                        }
+
+                        if (resposta.ok) {
+                            document.getElementById(`promo-${id}`).remove();
+                            Swal.fire({
+                                title: 'Excluído!',
+                                text: json.mensagem || 'Promoção excluída com sucesso.',
+                                icon: 'success',
+                                timer: 2000,
+                                showConfirmButton: false
+                            });
+                        } else {
+                            Swal.fire({
+                                title: 'Erro',
+                                text: json.mensagem || 'Erro ao excluir a promoção.',
+                                icon: 'error'
+                            });
+                        }
+                    } catch (erro) {
+                        console.error("Erro na exclusão:", erro);
+                        Swal.fire({
+                            title: 'Erro de conexão',
+                            text: 'Não foi possível se conectar ao servidor.',
+                            icon: 'error'
+                        });
+                    }
+                }
+            });
+        });
+
+    } catch (error) {
+        console.error("Erro ao carregar promoções:", error);
+        Swal.fire({
+            title: 'Erro',
+            text: 'Erro ao carregar promoções.',
+            icon: 'error'
+        });
+    }
+}
+
+
+// Carrega promoções ao abrir a página
+carregarPromocoes();
+</script>
+
 
         <script>
 // Função assíncrona para carregar os filmes do servidor
 async function carregarFilmes() {
     try {
         // Faz uma requisição para a API que retorna a lista de filmes
-        const resposta = await fetch("http://192.168.1.128:5000/filme");
+        const resposta = await fetch("http://192.168.1.130:5000/filme");
         
+
+
+
         // Converte a resposta para JSON
         const dados = await resposta.json();
 
@@ -137,22 +305,30 @@ async function carregarFilmes() {
 
                 // Define o conteúdo HTML do elemento, incluindo imagem e botões de ação
                 filmeDiv.innerHTML = `
-        <!-- CONTAINER DOS FILMES -->
-<div style="display: flex; flex-wrap: wrap; justify-content: center; gap: 40px; padding: 20px;">
+
+      
+    
+
+            
+       <!-- CONTAINER DOS FILMES -->
+     <div style="display: flex; flex-wrap: wrap; justify-content: center; gap: 32px; padding: 20px;">
+
 
     <!-- BLOCO DE UM FILME -->
-    <div style="width: 192px; text-align: center;">
+     <div style="width: 192px; text-align: center;">
+    
 
         <!-- Imagem do filme -->
+
         <a href="pagefilme.html?id=${filme.id_cadastrof}">
-            <img src="http://192.168.1.128:5000/${filme.imagem}" 
+            <img class="img-filme" src="http://192.168.1.130:5000/${filme.imagem}" 
                  alt="${filme.titulo}" 
-                 style="width: 192px; height: 282px; border-radius: 8px;">
+                 style="width: 170px; height: 264px; border-radius: 8px;">
         </a>
 
         <!-- Botão EDITAR -->
         <a href="editfilme.html?id=${filme.id_cadastrof}&titulo=${filme.titulo}&sinopse=${filme.sinopse}&genero=${filme.genero}&duracao=${filme.duracao}&diretor=${filme.diretor}&elenco=${filme.elenco}&classificacao=${filme.classificacao}" 
-           style="display: block; width: 85%; height: 50px; margin: 18px auto 10px;" 
+           style="display: block; width: 170px; height: 60px; margin: 18px auto 10px; padding: 50px padding-top: 70px" 
            class="btnrodape text-center">
            EDITAR FILME
         </a>
@@ -163,7 +339,7 @@ async function carregarFilmes() {
         <button class="btn-danger btnexcluir" id="btnexcluir"
                 style="display: block; width: 70%; height: 50px; margin: 0 auto;
                        background-color: red; color: white;
-                       font-family: Poppins; font-weight: 600; border-radius: 10px;">
+                       font-family: Poppins; font-weight: 600; border-radius: 10px; padding: 20px">
             EXCLUIR
         </button>
 
@@ -173,7 +349,6 @@ async function carregarFilmes() {
     <!-- Repita esse bloco para cada filme -->
 
 </div>
-
 
 
 
@@ -194,13 +369,14 @@ carregarFilmes();
         
         </script>
 
+
     <script>
 $(document).ready(function () {
     $(".btnexcluir").on("click", function () {
         let itemId = $(this).data("id"); // Pega o ID do item
 
         $.ajax({
-            url: `http://192.168.1.128:500/deletar/${itemId}`, // URL para a exclusão do item
+            url: `http://192.168.1.130:500/deletar/${itemId}`, // URL para a exclusão do item
             type: "DELETE",
             success: function (response) {
                 console.log(response); // Verifica a resposta do servidor
@@ -278,69 +454,10 @@ $(document).ready(function () {
             </div>
         </div>
 
-        <h3 class="subtit-white22" style="margin-top: 100px;">
-            CADASTRAR PROMOÇÕES
-        </h3>
-        <div class="container">
-            <div class="row">
-                <div class="col-md-4"></div>
-                <div class="col-md-4">
-                    <a href="addpromo.html" style="display: block; width: 100%; height: 65px; margin-bottom: 60px;" class="btnrodape text-center">CADASTRAR PROMOÇÃO</a>
-                </div>
-                <div class="col-md-4"></div>
-            </div>
-        </div>
+
         
-        <h3 class="subtit-white22" style="margin-top: 18px; margin-bottom: 30px">
-            EDITAR PROMOÇÕES
-        </h3>
-        
-        <div class="container">
-            <div class="row" id="promoexibe" style="margin-bottom: 116px;">
-                <!-- Promoções serão carregadas aqui -->
-            </div>
-        </div>
-        
-        <div class="promo-container" id="promoDiv"></div>
-        
-        <script>
-        async function carregarPromocoes() {
-            try {
-                const resposta = await fetch("http://192.168.1.128:5000/promocao");
-                const dados = await resposta.json();
-        
-                const promocoesContainer = document.getElementById("promoexibe");
-        
-                dados.promocao.forEach(promo => {
-                    if (!document.getElementById(`promo-${promo.id_promo}`)) {
-                        const promoDiv = document.createElement("div");
-        
-                        promoDiv.classList.add("col-12", "col-md-4", "mb-4", "promo-item");
-                        promoDiv.id = `promo-${promo.id_promo}`;
-        
-                        promoDiv.innerHTML = `
-                            <div class="promo-card">
-                                <div class="promo-content">
-                                    <img class="promo-img" src="http://192.168.1.128:5000/${promo.capapromo}" alt="Promoção">
-                                    <h5 class="promo-title">${promo.titulo}</h5>
-                                    <p class="promo-text">${promo.descricaopromo}</p>
-                                    <a href="editpromo.html?id=${promo.id_promo}" class="btn btn-warning edit-btn">Editar</a>
-                                </div>
-                            </div>
-                        `;
-        
-                        promocoesContainer.appendChild(promoDiv);
-                    }
-                });
-            } catch (error) {
-                console.error("Erro ao carregar promoções:", error);
-            }
-        }
-        
-        carregarPromocoes();
-        </script>
-        
-        
+
+
 
         <h3 class="subtit-white22">
             RELATÓRIO
@@ -349,7 +466,7 @@ $(document).ready(function () {
         <div class="row">
             <div class="col-md-4"></div>
             <div class="col-md-4" >
-                <a href="http://192.168.1.128:5000/usuario/relatorio" style=" display: block; width: 100%; height: 65px; margin-bottom: 60px;" class="btnrodape text-center">RELATÓRIO</a>
+                <a href="http://192.168.1.130:5000/usuario/relatorio" style=" display: block; width: 100%; height: 65px; margin-bottom: 60px;" class="btnrodape text-center">RELATÓRIO</a>
             </div>
             <div class="col-md-4"></div>
         </div>

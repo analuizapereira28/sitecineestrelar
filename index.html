@@ -37,30 +37,51 @@
 
   <header class="cabecalho">
     <div class="divcbc d-flex">
-      <img class="logo cabecalho1" src="assets/img/cinestrelar.png" />
+      <a href="indexprogramador.html">
+      <img class="logo cabecalho1" src="assets/img/cinestrelar.png" alt="Logo Cinestrelar">
+       </a>
       <a href="#programacao" class="btn-cbc">PROGRAMAÇÃO</a>
       <a class="btn-cbc" href="snackbar.html">SNACKBAR</a>
-      <a class="btn-cbc">CLUB CINESTELAR</a>
-      <img id="avatar" src="assets/img/Avatar.png" class="avatarcbc" />
+      <a href="clubi.html" class="btn-cbc">CLUB CINESTELAR</a>
+        <img src="assets/img/pino-de-localizacao.png" class="pinocbc">
+        <a href="https://www.google.com/maps?q=birigui" target="_blank" class="btn-cbc2">BIRIGUI</a>
+        <img id="avatar" src="assets/img/Avatar.png" class="avatarcbc" />
     </div>
   </header>
 
-  <div id="divlateral" class="divconta" style="background-color: #383838; height: 100vh; width: 450px; position: fixed;">
-    <h5 class="subtit-white22 text-center" style="font-size: 30px; margin-bottom: -30px;">Olá, Jorge!</h5>
-    <div class="text-center">
-      <a href="editarconta.html" class="btnlateral btnrodape text-center" style="display: block; width: 300px; height: 65px;">MINHA CONTA</a>
-      <a href="cadastro.html" class="btnlateral btnrodape text-center" style="display: block; width: 300px; height: 65px; margin-top: 15px;">SAIBA MAIS SOBRE O<br />CLUB CINESTELAR</a>
+ <div id="divlateral" class="divconta" style="background-color: #383838; height: 100vh; width: 450px; position: fixed;">
+  <h5 class="subtit-white22 text-center" style="font-size: 30px; margin-bottom: -30px;">Olá, Jorge!</h5>
 
-      <button id="btnlogout" class="Btn">
-        <div class="sign">
-          <svg viewBox="0 0 512 512"><path d="..."></path></svg>
-        </div>
-        <div class="text">Sair</div>
-      </button>
+  <div class="text-center" style="margin-top: 50px;">
+    <a href="editarconta.html" class="btnlateral btnrodape text-center" style="display: block; width: 300px; height: 65px;">MINHA CONTA</a>
 
-      <a id="fechar" class="btnrodape text-center" style="padding: 10px; background-color: red; color: white; margin: 400px auto; display: block; width: 70%;">FECHAR</a>
-    </div>
+    <a href="cadastro.html" class="btnlateral btnrodape text-center" style="display: block; width: 300px; height: 65px; margin-top: 15px;">
+      SAIBA MAIS SOBRE O<br />CLUB CINESTELAR
+    </a>
+
+    <button id="btnlogout" class="Btn" style="margin-top: 15px;">
+      <div class="sign">
+        <svg viewBox="0 0 512 512">
+          <path d="..."></path>
+        </svg>
+      </div>
+      <div class="text">Sair</div>
+    </button>
+
+    <!-- Botão VOLTAR PARA HOME -->
+    <a href="index.html" class="btnrodape text-center" 
+       style="padding: 10px; background-color: red; color: white; margin-top: 55px; display: block; width: 70%; margin-left: auto; margin-right: auto;">
+      VOLTAR PARA HOME
+    </a>
+
+    <!-- Botão FECHAR (já existente) -->
+    <a id="fechar" class="btnrodape text-center" 
+       style="padding: 10px; background-color: red; color: white; margin: 400px auto 0; display: block; width: 70%;">
+      FECHAR
+    </a>
   </div>
+</div>
+
 
   <section>
     <!-- Carrossel -->
@@ -92,7 +113,7 @@
     <script>
       async function carregarFilmes() {
         try {
-          const resposta = await fetch("http://192.168.1.128:5000/filme");
+          const resposta = await fetch("http://192.168.1.130:5000/filme");
           const dados = await resposta.json();
           const filmesContainer = document.getElementById("filmesexibe");
 
@@ -102,25 +123,23 @@
               filmeDiv.classList.add("col-md-2", "filme-card");
               filmeDiv.id = `filme-${filme.id_cadastrof}`;
 
-              const imagemURL = `http://192.168.1.128:5000/${filme.imagem}`;
+              const imagemURL = `http://192.168.1.130:5000/${filme.imagem}`;
 
               let sessoesHTML = "";
               if (filme.sessoes && filme.sessoes.length > 0) {
-                sessoesHTML = `
-                  <div class="mt-2" style="color: white; font-size: 13px;">
-                    ${filme.sessoes.map(sessao => `
-                      <div>📅 ${sessao.data} 🕒 ${sessao.horario} 🎬 ${sessao.sala}</div>
-                    `).join("")}
-                  </div>
-                `;
+                sessoesHTML = 
+                  `<div class="mt-2" style="color: white; font-size: 13px;">
+                    ${filme.sessoes.map(sessao => 
+                      `<div>📅 ${sessao.data} 🕒 ${sessao.horario} 🎬 ${sessao.sala}</div>`
+                    ).join("")}
+                  </div>`;
               }
 
-              filmeDiv.innerHTML = `
-                <a href="pagefilme.html?id=${filme.id_cadastrof}">
+              filmeDiv.innerHTML = 
+                `<a href="pagefilme.html?id=${filme.id_cadastrof}">
                   <img src="${imagemURL}" alt="${filme.titulo}" class="filme-img" onerror="this.src='assets/img/erro.jpg'" />
                 </a>
-                ${sessoesHTML}
-              `;
+                ${sessoesHTML}`;
 
               filmesContainer.appendChild(filmeDiv);
             }
@@ -133,33 +152,68 @@
       carregarFilmes();
     </script>
 
-
-
     <!-- APROVEITE NO CINESTELAR -->
     <h3 class="subtit-white22">APROVEITE NO CINESTELAR</h3>
     <div class="container">
       <div class="row g-4">
         <div class="col-md-4">
-          <img src="assets/img/combocolorido.png" class="img-fluid" />
+          <a href="snackbar.html">
+            <img src="assets/img/combocolorido.png" class="img-fluid" />
+          </a>
         </div>
+
         <div class="col-md-4">
-          <img src="assets/img/combodoce.png" class="img-fluid" />
+          <a href="snackbar.html">
+            <img src="assets/img/combodoce.png" class="img-fluid" />
+          </a>
         </div>
+
         <div class="col-md-4">
-          <img src="assets/img/pipoquinhas.png" class="img-fluid" />
+          <a href="snackbar.html">
+            <img src="assets/img/pipoquinhas.png" class="img-fluid" />
+          </a>
         </div>
       </div>
     </div>
 
-    <!-- EM BREVE -->
-    <div class="container">
-      <div class="row g-3">
-        <div class="col-md-2"><a href="pagefilme.html"><img class="img-fluid" style="height: 300px; object-fit: cover;" src="assets/img/images (2).jfif" /></a></div>
-        <div class="col-md-2"><a href="pagefilme.html"><img class="img-fluid" style="height: 300px; object-fit: cover;" src="assets/img/images (2).jfif" /></a></div>
-        <div class="col-md-2"><a href="pagefilme.html"><img class="img-fluid" style="height: 300px; object-fit: cover;" src="assets/img/images (2).jfif" /></a></div>
-        <div class="col-md-2"><a href="pagefilme.html"><img class="img-fluid" style="height: 300px; object-fit: cover;" src="assets/img/images (2).jfif" /></a></div>
-        <div class="col-md-2"><a href="pagefilme.html"><img class="img-fluid" style="height: 300px; object-fit: cover;" src="assets/img/images (2).jfif" /></a></div>
-        <div class="col-md-2"><a href="pagefilme.html"><img class="img-fluid" style="height: 300px; object-fit: cover;" src="assets/img/images (2).jfif" /></a></div>
+      <!-- EM BREVE -->
+    <h3 class="subtit-white22">EM BREVE</h3>
+ <div class="container">
+  <div class="row g-3">
+    <div class="col-md-2">
+      <a href="pagefilme.html">
+        <img class="img-fluid" style="height: 300px; object-fit: cover;" src="assets/img/images (2).jfif" />
+      </a>
+    </div>
+    <div class="col-md-2">
+      <a href="pagefilme.html">
+        <img class="img-fluid" style="height: 300px; object-fit: cover;" src="assets/img/images (2).jfif" />
+      </a>
+    </div>
+    <div class="col-md-2">
+      <a href="pagefilme.html">
+        <img class="img-fluid" style="height: 300px; object-fit: cover;" src="assets/img/images (2).jfif" />
+      </a>
+    </div>
+    <div class="col-md-2">
+      <a href="pagefilme.html">
+        <img class="img-fluid" style="height: 300px; object-fit: cover;" src="assets/img/images (2).jfif" />
+      </a>
+    </div>
+    <div class="col-md-2">
+      <a href="pagefilme.html">
+        <img class="img-fluid" style="height: 300px; object-fit: cover;" src="assets/img/images (2).jfif" />
+      </a>
+    </div>
+    <div class="col-md-2">
+      <a href="pagefilme.html">
+        <img class="img-fluid" style="height: 300px; object-fit: cover;" src="assets/img/images (2).jfif" />
+      </a>
+    </div>
+   </div>
+    </div>
+
+
       </div>
     </div>
   </section>
@@ -188,4 +242,4 @@
   </footer>
 
 </body>
-</html>
+</html> 
